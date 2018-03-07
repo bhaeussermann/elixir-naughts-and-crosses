@@ -1,32 +1,44 @@
 defmodule NaughtsAndCrosses do
   def main(_) do
+    IO.puts("=== Naughts & Crosses ===\r\n")
+    
+    board_size = prompt_board_size()
+  
     player_move_functions = 
-      if prompt_human_player() == :naught do
+      if prompt_human_player_piece() == :naught do
         [naught: &HumanPlayer.get_move/1, cross: &AiPlayer.get_move/1]
       else
         [naught: &AiPlayer.get_move/1, cross: &HumanPlayer.get_move/1]
       end
     
-    keys = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]
+    keys = if board_size == 3 do
+        [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]
+      else
+        [["7", "8", "9", "0"], ["u", "i", "o", "p"], ["j", "k", "l", ";"], ["m", ",", ".", "/"]]
+      end
     key_position_lookup = CliHelper.get_position_lookup(keys)
     
-    IO.puts("=== Naughts & Crosses ===\r\n")
     IO.puts("Type one of the following to place at the corresponding position ('q' to quit):\r\n")
     print_board(keys, &Kernel.to_string/1)
     
     play([
-      board: Board.create(3), 
+      board: Board.create(board_size), 
       current_player: :naught, 
       player_move_functions: player_move_functions, 
       key_position_lookup: key_position_lookup
     ])
   end
   
-  defp prompt_human_player do
+  defp prompt_board_size do
+    size = IO.gets("Choose board size: 3/4 ") |> String.trim
+    if Enum.member?(["3", "4"], size), do: String.to_integer(size), else: prompt_board_size()
+  end
+  
+  defp prompt_human_player_piece do
     case IO.gets("Choose your piece: o/x ") |> String.trim do
       "o" -> :naught
       "x" -> :cross
-      _ -> prompt_human_player()
+      _ -> prompt_human_player_piece()
     end
   end
   

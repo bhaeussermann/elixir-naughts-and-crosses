@@ -1,6 +1,7 @@
 defmodule AiPlayer do
   def get_move(state) do
-    if state[:board] |> Board.get_value(1, 1) == :empty do
+    board = state[:board]
+    if (Enum.count(board) == 3) and (board |> Board.get_value(1, 1) == :empty) do
       {1, 1}
     else
       target_line = get_target_line(state)

@@ -1,5 +1,12 @@
 defmodule NaughtsAndCrosses do
   def main(_) do
+    player_move_functions = 
+      if prompt_human_player() == :naught do
+        [naught: &HumanPlayer.get_move/1, cross: &AiPlayer.get_move/1]
+      else
+        [naught: &AiPlayer.get_move/1, cross: &HumanPlayer.get_move/1]
+      end
+    
     keys = [["7", "8", "9"], ["4", "5", "6"], ["1", "2", "3"]]
     key_position_lookup = CliHelper.get_position_lookup(keys)
     
@@ -7,7 +14,20 @@ defmodule NaughtsAndCrosses do
     IO.puts("Type one of the following to place at the corresponding position ('q' to quit):\r\n")
     print_board(keys, &Kernel.to_string/1)
     
-    play([board: Board.create(3), current_player: :naught, key_position_lookup: key_position_lookup])
+    play([
+      board: Board.create(3), 
+      current_player: :naught, 
+      player_move_functions: player_move_functions, 
+      key_position_lookup: key_position_lookup
+    ])
+  end
+  
+  defp prompt_human_player do
+    case IO.gets("Choose your piece: o/x ") |> String.trim do
+      "o" -> :naught
+      "x" -> :cross
+      _ -> prompt_human_player()
+    end
   end
   
   defp play(state) do
@@ -19,41 +39,29 @@ defmodule NaughtsAndCrosses do
       :naught -> IO.puts("Naughts is the winner!")
       :cross -> IO.puts("Cross is the winner!")
       :tie -> IO.puts("It's a tie.")
-      :none -> read_move(state)
+      :none -> next_move(state)
     end
   end
   
-  defp read_move(state) do
-    move = IO.gets("\r\n#{if state[:current_player] == :naught, do: "Naught's", else: "Cross'"} turn to move: ") 
-      |> String.trim
-    
-    if move != "q" do
-      key_position_lookup = state[:key_position_lookup]
-      case Map.fetch(key_position_lookup, move) do
-        {:ok, {row, column}} -> move(state, row, column)
-        :error -> report_input_error(state)
-      end
+  defp next_move(state) do
+    player_move_function = state[:player_move_functions][state[:current_player]]
+    case player_move_function.(state) do
+      :halt -> :halt
+      move -> move |> apply_move(state) |> play()
     end
   end
   
-  defp move(state, row, column) do
+  defp apply_move({row, column}, state) do
     board = state[:board]
     current_player = state[:current_player]
-    
-    if Board.get_value(board, row, column) == :empty do
-      board = Board.set_value(board, row, column, current_player)
-      next_player = if current_player == :naught, do: :cross, else: :naught
-      play([board: board, current_player: next_player, key_position_lookup: state[:key_position_lookup]])
-    else
-      IO.puts("The specified cell is occupied.")
-      play(state)
-    end
+    [
+      board: Board.set_value(board, row, column, current_player), 
+      current_player: (if current_player == :naught, do: :cross, else: :naught), 
+      player_move_functions: state[:player_move_functions], 
+      key_position_lookup: state[:key_position_lookup]
+    ]
   end
   
-  defp report_input_error(state) do
-    IO.puts("Invalid input.")
-    play(state)
-  end
   
   defp print_board(board) do
     print_board(board, &get_board_cell_character/1)

@@ -21,12 +21,11 @@ defmodule NaughtsAndCrosses do
     IO.puts("Type one of the following to place at the corresponding position ('q' to quit):\r\n")
     print_board(keys, &Kernel.to_string/1)
     
-    play([
+    play(%GameState{
       board: Board.create(board_size), 
-      current_player: :naught, 
       player_move_functions: player_move_functions, 
       key_position_lookup: key_position_lookup
-    ])
+    })
   end
   
   defp prompt_board_size do
@@ -43,11 +42,10 @@ defmodule NaughtsAndCrosses do
   end
   
   defp play(state) do
-    board = state[:board]
     IO.puts("")
-    print_board(board)
+    print_board(state.board)
     
-    case Board.get_winner(board) do
+    case Board.get_winner(state.board) do
       :naught -> IO.puts("Naughts is the winner!")
       :cross -> IO.puts("Cross is the winner!")
       :tie -> IO.puts("It's a tie.")
@@ -56,7 +54,7 @@ defmodule NaughtsAndCrosses do
   end
   
   defp next_move(state) do
-    player_move_function = state[:player_move_functions][state[:current_player]]
+    player_move_function = state.player_move_functions[state.current_player]
     case player_move_function.(state) do
       :halt -> :halt
       move -> move |> apply_move(state) |> play()
@@ -64,14 +62,10 @@ defmodule NaughtsAndCrosses do
   end
   
   defp apply_move({row, column}, state) do
-    board = state[:board]
-    current_player = state[:current_player]
-    [
-      board: Board.set_value(board, row, column, current_player), 
-      current_player: (if current_player == :naught, do: :cross, else: :naught), 
-      player_move_functions: state[:player_move_functions], 
-      key_position_lookup: state[:key_position_lookup]
-    ]
+    %GameState{state | 
+      board: Board.set_value(state.board, row, column, state.current_player), 
+      current_player: (if state.current_player == :naught, do: :cross, else: :naught)
+    }
   end
   
   
@@ -97,7 +91,7 @@ defmodule NaughtsAndCrosses do
     print_board_row(tail, get_cell_character)
   end
   
-  defp get_board_cell_character([position: _, value: value]) do
+  defp get_board_cell_character(%BoardCell{value: value}) do
     case value do
       :empty -> " "
       :naught -> "o"

@@ -4,11 +4,11 @@ defmodule Board do
   end
   
   def get_value(board, row, column) do
-    board |> Enum.at(row) |> Enum.at(column) |> Keyword.get(:value)
+    board |> Enum.at(row) |> Enum.at(column) |> Map.get(:value)
   end
   
   def set_value(board, row, column, new_value) do
-    updated_row = board |> Enum.at(row) |> ListHelper.set_value(column, [position: { row, column }, value: new_value])
+    updated_row = board |> Enum.at(row) |> ListHelper.set_value(column, %BoardCell{position: { row, column }, value: new_value})
     ListHelper.set_value(board, row, updated_row)
   end
   
@@ -36,17 +36,17 @@ defmodule Board do
   end
   
   defp create_row(current_row, current_column, upper_column) do
-    [[position: {current_row, current_column}, value: :empty] | create_row(current_row, current_column + 1, upper_column)]
+    [%BoardCell{position: {current_row, current_column}} | create_row(current_row, current_column + 1, upper_column)]
   end
   
-  defp get_line_winner([[position: _, value: :empty] | _]) do
+  defp get_line_winner([%BoardCell{value: :empty} | _]) do
     :none
   end
   
   defp get_line_winner([head | tail]) do
     cond do
-      Enum.all?(tail, &(&1[:value] == head[:value])) -> head[:value]
-      Enum.all?(tail, &(&1[:value] != :empty)) -> :tie
+      Enum.all?(tail, &(&1.value == head.value)) -> head.value
+      Enum.all?(tail, &(&1.value != :empty)) -> :tie
       true -> :none
     end
   end

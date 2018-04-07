@@ -4,6 +4,7 @@
 
 <h1>Naughts &amp; Crosses</h1>
 
+<div class="game">
 <div class="board">
 <%= for row <- @board do %>
 <div class="row">
@@ -15,10 +16,19 @@
 <% end %>
 </div>
 
-<div>
-  <span><%= @message %></span>
-</div>
+  <div class="message"><%= @message %></div>
 
-<div>
-  <button id="new-game-button" data-url="<%= page_path(@conn, :index) %>">New Game</button>
+  <h4>Game Options</h4>
+  <div>
+    <span class="control-panel">
+      <span class="setting">
+        <label>Player symbol: </label>
+        <select id="player-selection">
+          <option value="naughts" <%= if @options["player"] == "naughts", do: "selected=\"selected\"", else: "" %>>Naughts</option>
+          <option value="crosses" <%= if @options["player"] == "crosses", do: "selected=\"selected\"", else: "" %>>Crosses</option>
+        </select>
+      </span>
+      <button id="new-game-button" data-url="<%= page_path(@conn, :index) %>">New Game</button>
+    </span>
+  </div>
 </div>

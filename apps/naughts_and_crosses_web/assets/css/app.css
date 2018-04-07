@@ -1,3 +1,27 @@
+.game {
+  margin: 0 10px;
+}
+
+.control-panel {
+  border: 1px solid #AAA;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.control-panel label {
+  font-size: 14px;
+}
+
+.control-panel .setting {
+  margin: 0 5px;
+}
+
+.message {
+  margin: 8px 0;
+  height: 22px;
+  font-style: italic;
+}
+
 .cell {
   position: relative;
   display: inline-block;
@@ -58,4 +82,10 @@
   -moz-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   -o-transform: rotate(-45deg);
+}
+
+button {
+  background-color: #E2E2E2;
+  border-radius: 5px;
+  padding: 4px;
 }

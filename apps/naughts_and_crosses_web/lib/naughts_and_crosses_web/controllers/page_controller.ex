@@ -4,17 +4,23 @@ defmodule NaughtsAndCrossesWeb.PageController do
   alias NaughtsAndCrosses.Board
   alias NaughtsAndCrosses.AiPlayer
 
-  def index(conn, _params) do
+  def index(conn, params) do
+    options = add_defaults(params, %{ "player" => "naughts" })
+    
     state = %GameState{ board: Board.create(3) }
-    conn = put_session(conn, :state, state)
-    render conn, "index.html", board: state.board, message: ""
+    next_state = (if options["player"] == "naughts", do: state, else: GameState.apply_move(state, AiPlayer.get_move(state)))
+    
+    conn = conn
+      |> put_session(:state, next_state)
+      |> put_session(:options, options)
+    render conn, "index.html", board: next_state.board, options: options, message: ""
   end
   
   def place(conn, %{ "row" => row, "column" => column }) do
     state = get_session(conn, :state)
     status_message = get_status_message(state)
     if status_message != "" do
-      render conn, "index.html", board: state.board, message: status_message
+      render conn, "index.html", board: state.board, options: get_session(conn, :options), message: status_message
     else
       row_number = String.to_integer(row)
       column_number = String.to_integer(column)
@@ -28,7 +34,7 @@ defmodule NaughtsAndCrossesWeb.PageController do
       end
     
       conn = put_session(conn, :state, next_state)
-      render conn, "index.html", board: next_state.board, message: message
+      render conn, "index.html", board: next_state.board, options: get_session(conn, :options), message: message
     end
   end
   
@@ -48,5 +54,9 @@ defmodule NaughtsAndCrossesWeb.PageController do
       :tie -> "It's a tie."
       :none -> ""
     end
+  end
+  
+  defp add_defaults(params, defaults) do
+    Map.merge(params, defaults, fn _key, value1, _value2 -> value1 end)
   end
 end

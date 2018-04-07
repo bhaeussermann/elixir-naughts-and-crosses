@@ -6,7 +6,7 @@ export var Page = {
       });
   
       $("#new-game-button").on("click", function() {
-        window.location.href = $(this).data("url");
+        window.location.href = $(this).data("url") + "?player=" + $("#player-selection").val();
       });
     });
   }

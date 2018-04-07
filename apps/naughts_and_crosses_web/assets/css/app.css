@@ -1,1 +1,61 @@
-/* This file is for your main application css. */
+.cell {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  margin: 1px 4px;
+  box-shadow: 
+    1px 1px 0 4px white,
+    0 0 0 4px black;
+}
+
+.row:first-child .cell {
+  box-shadow:
+    2px -1px 0 5px white,
+    0 0 0 4px black;
+}
+
+.cell:first-child {
+  box-shadow:
+    0 1px 0 4px white,
+    0 0 0 4px black;
+}
+
+.row:first-child .cell:first-child {
+  box-shadow:
+    0 0 0 4px white;
+}
+
+.naught:after {
+  content: "";
+  display: inline-block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 8px solid red;
+  border-radius: 50%;
+}
+
+.cross:before,
+.cross:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  background-color: blue;
+  top: -1px;
+  left: 15px;
+  width: 6px;
+  height: 40px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+.cross:after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+}

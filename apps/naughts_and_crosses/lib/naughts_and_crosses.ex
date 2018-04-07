@@ -64,15 +64,8 @@ defmodule NaughtsAndCrosses do
     player_move_function = state.player_move_functions[state.current_player]
     case player_move_function.(state) do
       :halt -> :halt
-      move -> move |> apply_move(state) |> play()
+      move -> GameState.apply_move(state, move) |> play()
     end
-  end
-  
-  defp apply_move({row, column}, state) do
-    %GameState{state | 
-      board: Board.set_value(state.board, row, column, state.current_player), 
-      current_player: (if state.current_player == :naught, do: :cross, else: :naught)
-    }
   end
   
   

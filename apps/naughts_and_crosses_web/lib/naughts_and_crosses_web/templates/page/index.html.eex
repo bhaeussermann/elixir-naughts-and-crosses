@@ -1,2 +1,24 @@
+<% alias NaughtsAndCrossesWeb.PageView %>
+
+<script>require("js/page").Page.init()</script>
+
+<h1>Naughts &amp; Crosses</h1>
+
+<div class="board">
+<%= for row <- @board do %>
+<div class="row">
+<%= for cell <- row do %>
+<span 
+  class="cell <%= PageView.class_for_cell(cell) %>" 
+  data-place-url="<%= page_path(@conn, :place) %>?<%= PageView.position_string(cell) %>"></span><% end %>
+</div>
+<% end %>
+</div>
+
 <div>
+  <span><%= @message %></span>
+</div>
+
+<div>
+  <button id="new-game-button" data-url="<%= page_path(@conn, :index) %>">New Game</button>
 </div>

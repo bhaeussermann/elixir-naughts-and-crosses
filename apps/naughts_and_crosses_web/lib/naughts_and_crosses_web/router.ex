@@ -17,5 +17,6 @@ defmodule NaughtsAndCrossesWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/place", PageController, :place
   end
 end

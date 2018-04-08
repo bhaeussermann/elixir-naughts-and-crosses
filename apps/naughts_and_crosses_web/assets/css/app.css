@@ -16,6 +16,10 @@
   margin: 0 5px;
 }
 
+.control-panel .setting input {
+  width: 30px;
+}
+
 .message {
   margin: 8px 0;
   height: 22px;

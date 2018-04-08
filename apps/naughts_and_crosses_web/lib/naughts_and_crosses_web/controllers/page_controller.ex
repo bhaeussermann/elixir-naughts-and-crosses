@@ -5,9 +5,10 @@ defmodule NaughtsAndCrossesWeb.PageController do
   alias NaughtsAndCrosses.AiPlayer
 
   def index(conn, params) do
-    options = add_defaults(params, %{ "player" => "naughts" })
+    options = add_defaults(params, %{ "player" => "naughts", "board-size" => "3" })
     
-    state = %GameState{ board: Board.create(3) }
+    board_size = String.to_integer(options["board-size"]);
+    state = %GameState{ board: Board.create(board_size) }
     next_state = (if options["player"] == "naughts", do: state, else: GameState.apply_move(state, AiPlayer.get_move(state)))
     
     conn = conn

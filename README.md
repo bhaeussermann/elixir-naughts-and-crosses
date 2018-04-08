@@ -11,12 +11,16 @@ Includes two apps:
 
 To build the application run the following commands:
 
-```cd apps/naughts_and_crosses
-mix escript.build```
+```
+cd apps/naughts_and_crosses
+mix escript.build
+```
 
 And to run the application run
 
-```./naughts_and_crosses```
+```
+./naughts_and_crosses
+```
 
 ## Web App
 

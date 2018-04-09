@@ -20,7 +20,7 @@
   width: 30px;
 }
 
-.message {
+#message {
   margin: 8px 0;
   height: 22px;
   font-style: italic;

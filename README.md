@@ -16,7 +16,7 @@ cd apps/naughts_and_crosses
 mix escript.build
 ```
 
-And to run the application run
+And to start the application run
 
 ```
 ./naughts_and_crosses

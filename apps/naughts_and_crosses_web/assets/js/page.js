@@ -2,7 +2,15 @@ export var Page = {
   init: function() {
     $(function() {
       $(".cell").on("click", function() {
-        window.location.href = $(this).data("placeUrl");
+        $.ajax({
+          url: $(this).data("placeUrl"),
+          success: function(response) {
+              $("#message").text(response.message);
+              response.placements.forEach(function(placement) {
+                $(".cell[data-position='" + placement.row + "," + placement.column + "']").addClass(placement.symbol)
+              });
+            }
+          });
       });
       
       $("#board-size").on("change", function () {

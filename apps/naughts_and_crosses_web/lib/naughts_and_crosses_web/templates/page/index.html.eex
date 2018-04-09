@@ -10,13 +10,13 @@
 <div class="row">
 <%= for cell <- row do %>
 <span 
-  class="cell <%= PageView.class_for_cell(cell) %>" 
-  data-place-url="<%= page_path(@conn, :place) %>?<%= PageView.position_string(cell) %>"></span><% end %>
+  class="cell <%= PageView.class_for_cell(cell) %>" data-position="<%= PageView.position_attribute_string(cell) %>" 
+  data-place-url="<%= page_path(@conn, :place) %>?<%= PageView.position_url_string(cell) %>"></span><% end %>
 </div>
 <% end %>
 </div>
 
-  <div class="message"><%= @message %></div>
+  <div id="message"></div>
 
   <h4>Game Options</h4>
   <div>

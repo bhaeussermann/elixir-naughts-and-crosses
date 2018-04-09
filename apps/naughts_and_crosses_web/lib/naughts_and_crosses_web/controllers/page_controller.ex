@@ -14,37 +14,39 @@ defmodule NaughtsAndCrossesWeb.PageController do
     conn = conn
       |> put_session(:state, next_state)
       |> put_session(:options, options)
-    render conn, "index.html", board: next_state.board, options: options, message: ""
+    render conn, "index.html", board: next_state.board, options: options
   end
   
   def place(conn, %{ "row" => row, "column" => column }) do
     state = get_session(conn, :state)
     status_message = get_status_message(state)
     if status_message != "" do
-      render conn, "index.html", board: state.board, options: get_session(conn, :options), message: status_message
+      json conn, %{ placements: [], message: status_message }
     else
       row_number = String.to_integer(row)
       column_number = String.to_integer(column)
     
-      {next_state, message} = cond do
+      {placements, next_state, message} = cond do
         Board.get_value(state.board, row_number, column_number) == :empty ->
-          new_state = move(state, row_number, column_number)
-          { new_state, get_status_message(new_state) }
+          {placements, new_state} = move(state, row_number, column_number)
+          {placements, new_state, get_status_message(new_state)}
         true -> 
-          { state, "Invalid move" }
+          {[], state, "Invalid move"}
       end
     
       conn = put_session(conn, :state, next_state)
-      render conn, "index.html", board: next_state.board, options: get_session(conn, :options), message: message
+      json conn, %{ placements: placements, message: message }
     end
   end
   
   defp move(state, row, column) do
     next_state = state |> GameState.apply_move({row, column})
     if Board.get_winner(next_state.board) == :none do
-      next_state |> GameState.apply_move(AiPlayer.get_move(next_state))
+      {ai_move_row, ai_move_column} = AiPlayer.get_move(next_state)
+      {[%{row: row, column: column, symbol: state.current_player}, %{row: ai_move_row, column: ai_move_column, symbol: next_state.current_player}], 
+        next_state |> GameState.apply_move({ai_move_row, ai_move_column})}
     else
-      next_state
+      {[%{row: row, column: column, symbol: state.current_player}], next_state}
     end
   end
   

@@ -11,7 +11,11 @@ defmodule NaughtsAndCrossesWeb.PageView do
     end
   end
   
-  def position_string(%BoardCell{ position: {row, column} }) do
+  def position_attribute_string(%BoardCell{ position: {row, column} }) do
+    "#{row},#{column}"
+  end
+  
+  def position_url_string(%BoardCell{ position: {row, column} }) do
     "row=#{row}&column=#{column}"
   end
 end

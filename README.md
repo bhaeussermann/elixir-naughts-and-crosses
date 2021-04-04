@@ -13,6 +13,7 @@ To build the application run the following commands:
 
 ```
 cd apps/naughts_and_crosses
+mix deps.get
 mix escript.build
 ```
 

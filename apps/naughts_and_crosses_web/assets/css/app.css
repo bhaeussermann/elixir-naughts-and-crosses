@@ -32,7 +32,7 @@
   box-sizing: border-box;
   width: 36px;
   height: 36px;
-  margin: 1px 4px;
+  margin: 1px 1px;
   box-shadow: 
     1px 1px 0 4px white,
     0 0 0 4px black;
@@ -76,12 +76,14 @@
   left: 15px;
   width: 6px;
   height: 40px;
+  transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
 }
 .cross:after {
+  transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);

@@ -10,5 +10,4 @@
                         'Elixir.NaughtsAndCrosses.HumanPlayer',
                         'Elixir.NaughtsAndCrosses.ListHelper']},
               {registered,[]},
-              {vsn,"0.1.0"},
-              {extra_applications,[logger]}]}.
+              {vsn,"0.1.0"}]}.

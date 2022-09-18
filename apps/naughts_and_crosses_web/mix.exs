@@ -36,13 +36,15 @@ defmodule NaughtsAndCrossesWeb.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.2"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix, "~> 1.6"},
+      {:phoenix_live_view, "~> 0.16.4"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_html, "~> 3.0"},
       {:gettext, "~> 0.11"},
       {:naughts_and_crosses, in_umbrella: true},
-      {:cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 2.1"},
+      {:jason, "~> 1.0"},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
     ]
   end
 

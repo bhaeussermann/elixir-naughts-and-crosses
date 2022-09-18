@@ -3,7 +3,7 @@
 An Elixir umbrella for Naughts & Crosses (tic-tac-toe).  
 Includes two apps: 
 - `naughts_and_crosses`: Contains the game logic and implements it in a simple console application.
-- `naughts_and_crosses_web`: A Phoenix web application that presents the game on a web page.
+- `naughts_and_crosses_web`: A Phoenix web application that presents the game on a web page (hosted [here](https://elixir-naughts-and-crosses.onrender.com)).
 
 ## Console App
 

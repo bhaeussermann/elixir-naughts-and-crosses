@@ -1,0 +1,38 @@
+<% alias NaughtsAndCrossesWeb.PageView %>
+
+<script>require("js/page").Page.init()</script>
+
+<h1>Naughts &amp; Crosses</h1>
+
+<div class="game">
+<div class="board">
+<%= for row <- @board do %>
+<div class="row">
+<%= for cell <- row do %>
+<span 
+  class={"cell #{PageView.class_for_cell(cell)}"} data-position={PageView.position_attribute_string(cell)}
+  data-place-url={"#{page_path(@conn, :place)}?#{PageView.position_url_string(cell)}"}></span><% end %>
+</div>
+<% end %>
+</div>
+
+  <div id="message"></div>
+
+  <h4>Game Options</h4>
+  <div>
+    <span class="control-panel">
+      <span class="setting">
+        <label>Play as: </label>
+        <select id="player-selection">
+          <option value="naughts" selected={if @options["player"] == "naughts", do: "selected", else: ""}>Naughts</option>
+          <option value="crosses" selected={if @options["player"] == "crosses", do: "selected", else: ""}>Crosses</option>
+        </select>
+      </span>
+      <span class="setting">
+        <label>Board size: </label>
+        <input id="board-size" type="number" value={@options["board-size"]} min="3" max="5" />
+      </span>
+      <button id="new-game-button" data-url={page_path(@conn, :index)}>New Game</button>
+    </span>
+  </div>
+</div>

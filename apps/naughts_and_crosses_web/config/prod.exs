@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :naughts_and_crosses_web, NaughtsAndCrossesWeb.Endpoint,
   load_from_system_env: true,

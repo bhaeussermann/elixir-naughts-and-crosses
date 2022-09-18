@@ -8,18 +8,18 @@
     <meta name="author" content="Bernhard Häussermann">
 
     <title>Naughts &amp; Crosses</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href={static_path(@conn, "/css/app.css")}>
   </head>
 
   <body>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src={static_path(@conn, "/js/app.js")}></script>
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 		
     <div class="container">
-      <%= render @view_module, @view_template, assigns %>
+      <%= @inner_content %>
     </div>
   </body>
 </html>

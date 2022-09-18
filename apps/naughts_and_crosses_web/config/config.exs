@@ -1,21 +1,21 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
-use Mix.Config
+import Config
 
 # General application configuration
 config :naughts_and_crosses_web,
   namespace: NaughtsAndCrossesWeb
+
+# Configures esbuild
+config :esbuild, :version, "0.14.41"
+
+# Configures Phoenix
+config :phoenix, :json_library, Jason
 
 # Configures the endpoint
 config :naughts_and_crosses_web, NaughtsAndCrossesWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "/hE/A2yqdaQLn0TRDay8iPqz7byA8398qLY5rg7RQFzR/ibbktUBzhcDr6ucfKp/",
   render_errors: [view: NaughtsAndCrossesWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: NaughtsAndCrossesWeb.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub_server: NaughtsAndCrossesWeb.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

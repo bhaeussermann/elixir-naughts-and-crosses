@@ -1,11 +1,32 @@
-.game {
+:root {
+  --background-color: #F0F0F0;
+}
+
+.main-panel {
+  display: inline-block;
   margin: 0 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: var(--background-color);
+}
+
+.panel-row {
+  display: flex;
+}
+
+.panel-row > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  font-family: Helvetica;
 }
 
 .control-panel {
+  padding: 10px;
   border: 1px solid #AAA;
   border-radius: 8px;
-  padding: 10px;
 }
 
 .control-panel label {
@@ -21,7 +42,7 @@
 }
 
 #message {
-  margin: 8px 0;
+  margin-top: 15px;
   height: 22px;
   font-style: italic;
 }
@@ -34,25 +55,25 @@
   height: 36px;
   margin: 1px 1px;
   box-shadow: 
-    1px 1px 0 4px white,
+    1px 1px 0 4px var(--background-color),
     0 0 0 4px black;
 }
 
 .row:first-child .cell {
   box-shadow:
-    2px -1px 0 5px white,
+    2px -1px 0 5px var(--background-color),
     0 0 0 4px black;
 }
 
 .cell:first-child {
   box-shadow:
-    0 1px 0 4px white,
+    0 1px 0 4px var(--background-color),
     0 0 0 4px black;
 }
 
 .row:first-child .cell:first-child {
   box-shadow:
-    0 0 0 4px white;
+    0 0 0 4px var(--background-color);
 }
 
 .naught:after {

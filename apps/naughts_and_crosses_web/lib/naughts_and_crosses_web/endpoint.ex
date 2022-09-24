@@ -29,7 +29,8 @@ defmodule NaughtsAndCrossesWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_naughts_and_crosses_web_key",
-    signing_salt: "s49dncH/"
+    signing_salt: "s49dncH/",
+    extra: "SameSite=Lax"
 
   plug NaughtsAndCrossesWeb.Router
 

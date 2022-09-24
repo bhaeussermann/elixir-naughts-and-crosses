@@ -12,6 +12,7 @@ config :phoenix, :json_library, Jason
 
 # Configures the endpoint
 config :naughts_and_crosses_web, NaughtsAndCrossesWeb.Endpoint,
+  server: true,
   url: [host: "localhost"],
   secret_key_base: "/hE/A2yqdaQLn0TRDay8iPqz7byA8398qLY5rg7RQFzR/ibbktUBzhcDr6ucfKp/",
   render_errors: [view: NaughtsAndCrossesWeb.ErrorView, accepts: ~w(html json)],

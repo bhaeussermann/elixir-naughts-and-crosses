@@ -1,4 +1,4 @@
 import Config
 
 config :naughts_and_crosses_web, NaughtsAndCrossesWeb.Endpoint,
-  ssl: true
+  server: true
